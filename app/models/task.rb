@@ -25,7 +25,7 @@ class Task < ApplicationRecord
       transition ready_for_release: :released
     end
 
-    event :to_archiv do
+    event :to_archive do
       transition [:new_task, :released] => :archived
     end
   end
