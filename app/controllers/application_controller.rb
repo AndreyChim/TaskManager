@@ -1,2 +1,2 @@
-class ApplicationController < ActionController::Base
+class Web::ApplicationController < ApplicationController
 end
