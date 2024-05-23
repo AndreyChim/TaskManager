@@ -1,5 +1,12 @@
-class V1::ApplicationController < ApplicationController
+class Api::V1::ApplicationController < Api::ApplicationController
+  include AuthHelper
+  respond_to :json
+
   RANSACK_DEFAULT_SORT = 'id ASC'.freeze
+
+  def self.responder
+    JsonResponder
+  end
 
   def build_meta(collection)
     {
@@ -22,9 +29,5 @@ class V1::ApplicationController < ApplicationController
   def per_page
     per = params.fetch(:per, 10).to_i
     per > 100 ? 100 : per
-  end
-
-  def self.responder
-    JsonResponder
   end
 end
