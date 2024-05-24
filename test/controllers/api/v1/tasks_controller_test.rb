@@ -3,7 +3,7 @@ require 'test_helper'
 class Api::V1::TasksControllerTest < ActionController::TestCase
   test 'should get show' do
     author = create(:user)
-    task = create(:task, author: author, state: 'new_task')
+    task = create(:task, author: author)
     get :show, params: { id: task.id, format: :json }
     assert_response :success
   end
@@ -32,7 +32,7 @@ class Api::V1::TasksControllerTest < ActionController::TestCase
   test 'should put update' do
     author = create(:user)
     assignee = create(:user)
-    task = create(:task, author: author, state: 'new_task')
+    task = create(:task, author: author)
     task_attributes = attributes_for(:task).
       merge({ author_id: author.id, assignee_id: assignee.id }).
       stringify_keys
@@ -46,7 +46,7 @@ class Api::V1::TasksControllerTest < ActionController::TestCase
 
   test 'should delete destroy' do
     author = create(:user)
-    task = create(:task, author: author, state: 'new_task')
+    task = create(:task, author: author)
     delete :destroy, params: { id: task.id, format: :json }
     assert_response :success
 
