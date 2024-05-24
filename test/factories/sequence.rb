@@ -6,5 +6,4 @@ FactoryBot.define do
   end
   sequence(:email)  { |n| "person#{n}@example.com" }
   sequence(:avatar) { |n| "avatar#{n}" }
-  sequence(:state) { 'new_task' }
 end
