@@ -1,7 +1,7 @@
 class Web::BoardsController < Web::ApplicationController
   before_action :authenticate_user!
-  
+
   def show
-    render react_component: 'TaskBoard', props: {disableColumnDrag}
+    render(react_component: 'TaskBoard', props: {})
   end
 end
