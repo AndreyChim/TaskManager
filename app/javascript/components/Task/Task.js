@@ -5,12 +5,11 @@ import Card from '@material-ui/core/Card';
 import CardHeader from '@material-ui/core/CardHeader';
 import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
-import { withWidth } from '@material-ui/core';
-import {View} from 'react-native';  
+import * as useStyles from './useStyles';
 
 const Task = ({ task }) => {
-  const styles = { width: '33%'};
 
+  const classes = useStyles();
   return (
     <Card className={styles.root}>
       <CardHeader title={task.name} />
