@@ -7,9 +7,8 @@ import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
 import * as useStyles from './useStyles';
 
-const Task = ({ task }) => {
-
-  const classes = useStyles();
+function Task({ task }) {
+  const styles = useStyles();
   return (
     <Card className={styles.root}>
       <CardHeader title={task.name} />
@@ -20,7 +19,7 @@ const Task = ({ task }) => {
       </CardContent>
     </Card>
   );
-};
+}
 
 Task.propTypes = {
   task: PropTypes.shape().isRequired,
