@@ -63,7 +63,10 @@ function TaskBoard() {
     STATES.map(({ key }) => loadColumnInitial(key));
   };
 
-  return <KanbanBoard renderCard={(card) => <Task task={card} />}>{board}</KanbanBoard>;
+  return <KanbanBoard
+  renderColumnHeader={(column) => <ColumnHeader column={column} onLoadMore={loadColumnMore} />}
+  renderCard={(card) => <Task task={card} />}>{board}
+  </KanbanBoard>;
 }
 
 export default TaskBoard;
