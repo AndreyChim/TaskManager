@@ -1,10 +1,9 @@
-debugger;
 import routes from 'routes';
 import FetchHelper from 'utils/fetchHelper';
 
 export default {
   index(params) {
-    const path = routes.apiV1TasksPath('id');
+    const path = routes.apiV1TasksPath();
     return FetchHelper.get(path, params);
   },
 
