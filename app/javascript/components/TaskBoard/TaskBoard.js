@@ -47,6 +47,15 @@ function TaskBoard() {
     });
   };
 
+  const loadColumnMore = (state, page = 1, perPage = 10) => {
+    loadColumn(state, page, perPage).then(({ data }) => {
+      setBoardCards((prevState) => ({
+        ...prevState,
+        [state]: { cards: data.items, meta: data.meta },
+      }));
+    });
+  };
+
   const generateBoard = () => {
     const board = {
       columns: STATES.map(({ key, value }) => ({
@@ -64,7 +73,8 @@ function TaskBoard() {
     STATES.map(({ key }) => loadColumnInitial(key));
   };
 
-  return <KanbanBoard
+  return
+  <KanbanBoard
   renderColumnHeader={(column) => <ColumnHeader column={column} onLoadMore={loadColumnMore} />}
   renderCard={(card) => <Task task={card} />}>{board}
   </KanbanBoard>;
