@@ -98,5 +98,8 @@ function TaskBoard() {
     </KanbanBoard>
   );
 }
-
+    <Fab className={styles.addButton} color="primary" aria-label="add">
+      <AddIcon />
+    </Fab>
+    
 export default TaskBoard;
