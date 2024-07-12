@@ -8,6 +8,7 @@ import Task from 'components/Task';
 import TasksRepository from 'repositories/TasksRepository';
 import ColumnHeader from 'components/ColumnHeader';
 import styles from '@material-ui/icons/Style';
+import TaskForm from 'forms/TaskForm';
 
 const STATES = [
   { key: 'new_task', value: 'New' },
@@ -26,6 +27,11 @@ const initialBoard = {
     cards: [],
     meta: {},
   })),
+};
+
+const MODES = {
+  ADD: 'add',
+  NONE: 'none',
 };
 
 function TaskBoard() {
@@ -73,9 +79,6 @@ function TaskBoard() {
     STATES.map(({ key }) => loadColumnInitial(key));
   };
 
-  useEffect(() => loadBoard(), []);
-  useEffect(() => generateBoard(), [boardCards]);
-
   const handleCardDragEnd = (task, source, destination) => {
     const transition = task.transitions.find(({ to }) => destination.toColumnId === to);
     if (!transition) {
@@ -90,6 +93,26 @@ function TaskBoard() {
         alert(`Move failed! ${error.message}`);
       });
   };
+
+  const [mode, setMode] = useState(MODES.NONE);
+  const handleAddPopupOpen = () => {
+    setMode(MODES.ADD);
+  };
+
+  const handleClose = () => {
+    setMode(MODES.NONE);
+  };
+
+  const handleTaskCreate = (params) => {
+    const attributes = TaskForm.attributesToSubmit(params);
+    return TasksRepository.create(attributes).then(({ data: { task } }) => {
+      // … loading column with task.state
+      // … close popup
+    });
+  };
+
+  useEffect(() => loadBoard(), []);
+  useEffect(() => generateBoard(), [boardCards]);
 
   return (
     <>
