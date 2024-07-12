@@ -16,7 +16,7 @@ import TaskForm from 'forms/TaskForm';
 
 import useStyles from './useStyles';
 
-const AddPopup = ({ onClose, onCardCreate }) => {
+function AddPopup({ onClose, onCardCreate }) {
   const [task, changeTask] = useState(TaskForm.defaultAttributes());
   const [isSaving, setSaving] = useState(false);
   const [errors, setErrors] = useState({});
@@ -76,7 +76,7 @@ const AddPopup = ({ onClose, onCardCreate }) => {
       </Card>
     </Modal>
   );
-};
+}
 
 AddPopup.propTypes = {
   onClose: PropTypes.func.isRequired,
