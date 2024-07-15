@@ -9,6 +9,9 @@ import TasksRepository from 'repositories/TasksRepository';
 import ColumnHeader from 'components/ColumnHeader';
 import styles from '@material-ui/icons/Style';
 import TaskForm from 'forms/TaskForm';
+import AddPopup from 'components/AddPopup';
+
+import useStyles from './useStyles';
 
 const STATES = [
   { key: 'new_task', value: 'New' },
@@ -52,7 +55,6 @@ function TaskBoard() {
       }));
     });
   };
-
   const loadColumnMore = (state, page = 1, perPage = 10) => {
     loadColumn(state, page, perPage).then(({ data }) => {
       setBoardCards((prevState) => ({
@@ -106,6 +108,7 @@ function TaskBoard() {
   const handleTaskCreate = (params) => {
     const attributes = TaskForm.attributesToSubmit(params);
     return TasksRepository.create(attributes).then(({ data: { task } }) => {
+      // ImageBitmapRenderingContext.irb
       // … loading column with task.state
       // … close popup
     });
@@ -116,16 +119,18 @@ function TaskBoard() {
 
   return (
     <>
-      <Fab className={styles.addButton} color="primary" aria-label="add">
+      <Fab className={styles.addButton} color="primary" aria-label="add" onClick={handleOpenAddPopup}>
         <AddIcon />
       </Fab>
       <KanbanBoard
         renderColumnHeader={(column) => <ColumnHeader column={column} onLoadMore={loadColumnMore} />}
         renderCard={(card) => <Task task={card} />}
         onCardDragEnd={handleCardDragEnd}
+        onClick={handleAddPopupOpen}
       >
         {board}
       </KanbanBoard>
+      {mode === MODES.ADD && <AddPopup onCardCreate={handleTaskCreate} onClose={handleClose} />}
     </>
   );
 }
