@@ -9,7 +9,7 @@ import TasksRepository from 'repositories/TasksRepository';
 import ColumnHeader from 'components/ColumnHeader';
 import styles from '@material-ui/icons/Style';
 import TaskForm from 'forms/TaskForm';
-import AddPopup from 'components/AddPopup';
+import AddPopup from 'components/AddPopup/AddPopup.js';
 
 import useStyles from './useStyles';
 
@@ -97,7 +97,7 @@ function TaskBoard() {
   };
 
   const [mode, setMode] = useState(MODES.NONE);
-  const handleAddPopupOpen = () => {
+  const handleOpenAddPopup = () => {
     setMode(MODES.ADD);
   };
 
@@ -126,7 +126,6 @@ function TaskBoard() {
         renderColumnHeader={(column) => <ColumnHeader column={column} onLoadMore={loadColumnMore} />}
         renderCard={(card) => <Task task={card} />}
         onCardDragEnd={handleCardDragEnd}
-        onClick={handleAddPopupOpen}
       >
         {board}
       </KanbanBoard>
