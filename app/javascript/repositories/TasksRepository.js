@@ -12,9 +12,9 @@ export default {
     return FetchHelper.get(path);
   },
 
-  update(id) {
+  update(id, task = {}) {
     const path = routes.apiV1TaskPath(id);
-    return FetchHelper.get(path);
+    return FetchHelper.put(path, { task });
   },
 
   create(task = {}) {
@@ -24,6 +24,6 @@ export default {
 
   destroy(id) {
     const path = routes.apiV1TaskPath(id);
-    return FetchHelper.get(path);
+    return FetchHelper.delete(path);
   },
 };
