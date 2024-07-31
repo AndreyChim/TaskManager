@@ -65,7 +65,7 @@ function TaskBoard() {
   };
 
   const generateBoard = () => {
-    const board = {
+    const newBoard = {
       columns: STATES.map(({ key, value }) => ({
         id: key,
         title: value,
@@ -74,7 +74,7 @@ function TaskBoard() {
       })),
     };
 
-    setBoard(board);
+    setBoard(newBoard);
   };
 
   const loadBoard = () => {
@@ -122,9 +122,9 @@ function TaskBoard() {
         <AddIcon />
       </Fab>
       <KanbanBoard
+        onCardDragEnd={handleCardDragEnd}
         renderColumnHeader={(column) => <ColumnHeader column={column} onLoadMore={loadColumnMore} />}
         renderCard={(card) => <Task task={card} />}
-        onCardDragEnd={handleCardDragEnd}
       >
         {board}
       </KanbanBoard>
