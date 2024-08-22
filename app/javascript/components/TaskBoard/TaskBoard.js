@@ -61,10 +61,16 @@ function TaskBoard() {
   };
   const loadColumnMore = (state, page = 1, perPage = 10) => {
     loadColumn(state, page, perPage).then(({ data }) => {
-      setBoardCards((prevState) => ({
-        ...prevState,
-        [state]: { cards: data.items, meta: data.meta },
-      }));
+      setBoardCards((prevState) => {
+        const existingCards = prevState[state] ? prevState[state].cards : [];
+        return {
+          ...prevState,
+          [state]: {
+            cards: [...existingCards, ...data.items],
+            meta: data.meta,
+          },
+        };
+      });
     });
   };
 
