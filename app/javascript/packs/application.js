@@ -8,7 +8,7 @@ import * as ActiveStorage from '@rails/activestorage';
 import 'channels';
 import 'material-design-lite/material.js';
 import WebpackerReact from 'webpacker-react';
-import App from '../App';
+import App from 'App';
 
 WebpackerReact.setup({ App });
 Rails.start();
