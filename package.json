@@ -35,7 +35,7 @@
     "react-redux": "^9.1.2",
     "react-select": "^5.8.0",
     "redux": "^5.0.1",
-    "sass": "^1.77.6",
+    "sass": "^1.38.0",
     "webpack": "^4.46.0",
     "webpack-cli": "^3.3.12",
     "webpacker-react": "^0.3.2"
