@@ -65,4 +65,4 @@ gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 
 gem 'webpacker-react', '~> 0.3.2'
 gem 'js-routes'
-gem 'coveralls_reborn'
+gem 'coveralls_reborn', require: false
