@@ -1,4 +1,0 @@
-COVERALLS_REPO_TOKEN =VRydcF2LAaNuwJpkLzG1OKFx3pVWHiH5B
-
-name: coveralls
-uses: coverallsapp/github-action@v2
