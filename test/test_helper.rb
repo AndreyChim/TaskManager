@@ -1,4 +1,4 @@
-require 'coveralls_reborn'
+require 'coveralls'
 Coveralls.wear!('rails')
 
 require 'simplecov'
