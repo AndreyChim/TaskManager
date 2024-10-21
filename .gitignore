@@ -37,3 +37,4 @@ yarn-debug.log*
 **/.keep
 .vscode
 coverage
+.env

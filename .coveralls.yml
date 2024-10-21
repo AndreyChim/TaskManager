@@ -1,0 +1,4 @@
+ENV['COVERALLS_REPO_TOKEN']
+
+name: coveralls
+uses: coverallsapp/github-action@v2
