@@ -28,7 +28,7 @@ services:
   db:
     image: postgres:11.4
     ports:
-      - postgres:5432
+      - 5432:5432
     environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
