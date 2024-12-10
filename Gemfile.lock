@@ -221,6 +221,7 @@ GEM
       actionpack (>= 5.2)
       railties (>= 5.2)
     rexml (3.3.8)
+    rollbar (3.6.0)
     rubocop (1.66.1)
       json (~> 2.3)
       language_server-protocol (>= 3.17.0)
@@ -342,6 +343,7 @@ DEPENDENCIES
   rails (~> 6.1.6)
   ransack (= 3.2.1)
   responders
+  rollbar
   rubocop
   sass-rails (>= 6)
   selenium-webdriver (>= 4.0.0.rc1)
