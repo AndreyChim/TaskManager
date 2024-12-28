@@ -67,3 +67,5 @@ gem 'webpacker-react', '~> 0.3.2'
 gem 'js-routes'
 gem 'coveralls_reborn', require: false
 gem 'dotenv-rails', :groups => [:development, :test]
+gem 'bullet'
+gem 'rollbar'
