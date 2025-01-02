@@ -1,0 +1,1 @@
+Rails.logger.extend(ActiveSupport::Logger.broadcast(Rollbar::Logger.new))
