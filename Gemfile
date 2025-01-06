@@ -69,3 +69,4 @@ gem 'coveralls_reborn', require: false
 gem 'dotenv-rails', :groups => [:development, :test]
 gem 'bullet'
 gem 'rollbar'
+gem 'newrelic_rpm'
