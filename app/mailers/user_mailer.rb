@@ -1,2 +1,8 @@
 class UserMailer < ApplicationMailer
-end
+    def task_created
+      user = params[:user]
+  
+      mail(to: user.email)
+    end
+  end
+  
