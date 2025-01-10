@@ -36,11 +36,16 @@ class Api::V1::TasksControllerTest < ActionController::TestCase
 
   test 'should put update' do
     author = create(:user)
+    sign_in(author)
     assignee = create(:user)
     task = create(:task, author: author)
     task_attributes = attributes_for(:task).
       merge({ author_id: author.id, assignee_id: assignee.id }).
       stringify_keys
+    
+      assert_emails 1 do
+        post :update, params: { id: task.id, format: :json, task: task_attributes }
+      end
 
     patch :update, params: { id: task.id, format: :json, task: task_attributes }
     assert_response :success
