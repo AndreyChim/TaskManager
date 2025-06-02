@@ -3,6 +3,9 @@ version: '3.7'
 services:
   web:
     build: .
+    dns: 
+      - 8.8.8.8
+      - 1.1.1.1
     volumes: &web-volumes
       - &app-volume .:/task_manager:cached
       - ~/.ssh:/root/.ssh

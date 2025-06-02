@@ -1,1 +1,15 @@
-| Task #{@task.id} was updated
+<h1>Task Updated</h1>
+<p>Your task "<%= @task.name %>" has been modified.</p>
+
+<% if @changes.present? %>
+  <h3>Changes:</h3>
+  <ul>
+    <% @changes.each do |attribute, (old_value, new_value)| %>
+      <li><%= attribute.humanize %>: 
+        <%= old_value || 'blank' %> → <%= new_value || 'blank' %>
+      </li>
+    <% end %>
+  </ul>
+<% end %>
+
+<p>View updated task: <%= link_to @task.name, task_url(@task) %></p>

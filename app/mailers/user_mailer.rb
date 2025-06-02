@@ -10,9 +10,10 @@ class UserMailer < ApplicationMailer
     def task_updated
       user = params[:user]
       @task = params[:task]
-  
+      @changes = params[:changes] 
+    
       mail(from: 'noreply@taskmanager.com', to: user.email, subject: 'Task Updated')
-
+    
     end
-  end
+end
   
