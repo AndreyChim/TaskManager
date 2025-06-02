@@ -39,10 +39,12 @@ class Api::V1::TasksController < Api::V1::ApplicationController
   end
 
   def destroy
-    task = Task.find(params[:id])
-    task.destroy
-
-    respond_with(task)
+    task_name = @task.name
+    task_id = @task.id
+    @task.destroy
+    UserMailer.with(user: current_user, task_name: task_name, task_id: task_id)
+              .task_deleted
+              .deliver_later
   end
 
   private
