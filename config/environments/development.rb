@@ -85,4 +85,9 @@ Rails.application.configure do
   config.hosts << "taskmanager-tbkj.onrender.com"
   config.action_mailer.delivery_method = :letter_opener_web
   config.action_mailer.perform_caching = true
+  config.action_mailer.default_url_options = { 
+    host: 'localhost', 
+    port: 3000,
+    protocol: 'http'
+  }
 end

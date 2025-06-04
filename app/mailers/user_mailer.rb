@@ -21,5 +21,10 @@ class UserMailer < ApplicationMailer
       
       mail(from: 'noreply@taskmanager.com', to: user.email, subject: 'Task Deleted')
     end
+
+    def password_reset(user, reset)
+      @user = user
+      @reset = reset
+      mail to: user.email, subject: 'Password Reset Instructions'
+    end
 end
-  
