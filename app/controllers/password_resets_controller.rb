@@ -3,36 +3,39 @@ class Web::PasswordResetsController < Web::ApplicationController
     end
   
     def create
-      user = User.find_by(email: params[:email])
-      if user
-        reset = user.password_resets.create!(
-          expires_at: 24.hours.from_now,
-          used: false
-        )
-        UserMailer.password_reset(user, reset).deliver_now
+      form = PasswordResetRequestForm.new(email: params[:email])
+  
+      if form.save
+        redirect_to root_path, notice: 'Instructions sent if email exists'
+      else
+        flash.now[:alert] = form.errors.full_messages.join(', ')
+        render :new
       end
-      redirect_to root_path, notice: 'Instructions sent if email exists'
     end
 
     def edit
-      @reset = PasswordReset.find_by(token: params[:id])
-      redirect_to new_password_reset_path, alert: 'Invalid token' unless @reset&.still_valid?
+      form = PasswordResetForm.new(token: params[:id])
+      form.valid? # Trigger validation to check token
+      
+      if form.errors.empty?
+        @reset = form.reset
+      else
+        redirect_to new_password_reset_path, alert: form.errors.full_messages.join(', ')
+      end
     end
   
     def update
-      @reset = PasswordReset.find_by(token: params[:id])
-      
-      unless @reset&.still_valid?
-        redirect_to new_password_reset_path, alert: 'Invalid or expired token'
-        return
-      end
+      form = PasswordResetForm.new(
+        token: params[:id],
+        password: params[:user][:password],
+        password_confirmation: params[:user][:password_confirmation]
+      )
   
-      if params[:user][:password] == params[:user][:password_confirmation]
-        @reset.user.update!(password: params[:user][:password])
-        @reset.mark_used!
+      if form.save
         redirect_to login_path, notice: 'Password updated successfully'
       else
-        flash.now[:alert] = 'Passwords do not match'
+        @reset = form.reset
+        flash.now[:alert] = form.errors.full_messages.join(', ')
         render :edit
       end
     end
