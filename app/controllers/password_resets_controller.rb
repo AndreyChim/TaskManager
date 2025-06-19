@@ -25,12 +25,13 @@ class Web::PasswordResetsController < Web::ApplicationController
     end
   
     def update
+      user_params = password_reset_params
       form = PasswordResetForm.new(
         token: params[:id],
-        password: params[:user][:password],
-        password_confirmation: params[:user][:password_confirmation]
+        password: user_params[:password],
+        password_confirmation: user_params[:password_confirmation]
       )
-  
+    
       if form.save
         redirect_to login_path, notice: 'Password updated successfully'
       else
@@ -38,5 +39,11 @@ class Web::PasswordResetsController < Web::ApplicationController
         flash.now[:alert] = form.errors.full_messages.join(', ')
         render :edit
       end
+    end
+    
+    private
+    
+    def password_reset_params
+      params.require(:user).permit(:password, :password_confirmation)
     end
   end
