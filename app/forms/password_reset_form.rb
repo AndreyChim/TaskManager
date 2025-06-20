@@ -4,19 +4,14 @@ class PasswordResetForm
     attr_accessor :token, :password, :password_confirmation
     attr_reader :password_reset
   
-    validates :password, presence: true, length: { minimum: 6 }
-    validates :password_confirmation, presence: true
-    validate :passwords_match
+    validates :password, presence: true,
+                         length: { minimum: 6 },
+                         confirmation: true
     validate :password_reset_valid
 
     def initialize(token:)
       @token = token
       @password_reset = PasswordReset.find_by(token: token)
-    end
-  
-    def passwords_match
-      return if password == password_confirmation
-      errors.add(:password_confirmation, "doesn't match Password")
     end
   
     def password_reset_valid
@@ -29,6 +24,7 @@ class PasswordResetForm
   
     def save
       return false unless valid?
+      
       password_reset.user.update!(password: password)
       password_reset.mark_used!
       true
