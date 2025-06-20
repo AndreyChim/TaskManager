@@ -7,24 +7,24 @@ class PasswordResetForm
     validates :password, presence: true,
                          length: { minimum: 6 },
                          confirmation: true
-    validate :password_reset_valid
+    validate :password_reset_validity
 
     def initialize(token:)
       @token = token
       @password_reset = PasswordReset.find_by(token: token)
     end
   
-    def password_reset_valid
+    def password_reset_validity
       if password_reset.blank?
         errors.add(:base, 'Invalid token')
-      elsif !password_reset.still_valid?
+      elsif password_reset.expired?
         errors.add(:base, 'Token has expired')
       end
     end
   
     def save
       return false unless valid?
-      
+
       password_reset.user.update!(password: password)
       password_reset.mark_used!
       true
