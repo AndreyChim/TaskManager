@@ -1,5 +1,5 @@
 class PasswordReset < ApplicationRecord
-  belongs_to :user
+  belongs_to :user, polymorphic: true
 
   before_create :generate_token
   validates :token, uniqueness: true
@@ -11,7 +11,7 @@ class PasswordReset < ApplicationRecord
   end
 
   def still_valid?
-    !used? && expires_at > Time.current
+    expires_at > Time.current
   end
 
   def mark_used!
