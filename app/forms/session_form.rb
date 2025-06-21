@@ -11,13 +11,12 @@ class SessionForm
   private
 
   def authenticate_user
-    normalized_email = email.downcase.strip
-    @user = User.find_by("LOWER(email) = ?", normalized_email)
+    @user = User.find_by(email: email)
     
-   if @user.nil?
+    if @user.nil?
       errors.add(:email, "not found")
-     elsif !@user.authenticate(password)
+    elsif !@user.authenticate(password)
       errors.add(:password, "is incorrect")
-     end
-   end
+    end
+  end
 end
