@@ -12,11 +12,12 @@ class SessionForm
 
   def authenticate_user
     @user = User.find_by(email: email)
+    return unless @user
     
-    if @user.nil?
-      errors.add(:email, "not found")
-    elsif !@user.authenticate(password)
-      errors.add(:password, "is incorrect")
+    unless @user&.authenticate(password)
+      errors.add(:base, "Invalid email or password")
     end
   end
 end
+
+
