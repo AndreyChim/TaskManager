@@ -4,11 +4,7 @@ class PasswordReset < ApplicationRecord
   before_create :generate_token
   validates :token, uniqueness: true
 
-  after_create :send_password_reset_email
-
-  def send_password_reset_email
-    UserMailer.password_reset(user, self).deliver_now
-  end
+  after_create :trigger_password_reset_email
 
   def still_valid?
     expires_at > Time.current
@@ -22,5 +18,9 @@ class PasswordReset < ApplicationRecord
 
   def generate_token
     self.token = SecureRandom.urlsafe_base64(20)
+  end
+
+  def trigger_password_reset_email
+    PasswordResetEmailSender.call(self)
   end
 end
