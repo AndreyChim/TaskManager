@@ -1,9 +1,9 @@
 class PasswordResetForm
     include ActiveModel::Model
   
-    attr_accessor :token, :password, :password_confirmation
-    attr_reader :password_reset
-  
+    attr_reader :token, :password_reset
+    attr_accessor :password, :password_confirmation
+    
     validates :password, presence: true,
                          length: { minimum: 6 },
                          confirmation: true
