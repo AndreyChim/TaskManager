@@ -6,24 +6,16 @@ class PasswordReset < ApplicationRecord
 
   after_create :trigger_password_reset_email
 
-  STATE_PENDING = 'pending'
-  STATE_USED = 'used'
+  # State machine definition
+  state_machine :state, initial: :pending do
+    event :mark_used do
+      transition pending: :used
+    end
 
-  def state
-    used? ? STATE_USED : STATE_PENDING
-  end
+    state :pending, value: 'pending'
+    state :used, value: 'used'
 
-  def pending?
-    state == STATE_PENDING
-  end
-
-  def used?
-    used
-  end
-
-  def mark_used!
-    return if used?
-    update!(used: true)
+    after_transition to: :used, do: :update_used_timestamp
   end
 
   def still_valid?
@@ -38,5 +30,10 @@ class PasswordReset < ApplicationRecord
 
   def trigger_password_reset_email
     PasswordResetEmailSender.call(self)
+  end
+
+   # Callback to update timestamp when marked used
+  def update_used_timestamp
+    update(used_at: Time.current)
   end
 end
