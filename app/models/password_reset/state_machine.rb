@@ -13,4 +13,10 @@ module PasswordReset::StateMachine
       after_transition to: :used, do: :update_used_timestamp
     end
   end
+
+  private
+
+  def update_used_timestamp
+    self.used_at = Time.current
+  end
 end

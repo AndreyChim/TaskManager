@@ -3,7 +3,7 @@ class PasswordReset < ApplicationRecord
 
   before_create :generate_token
   before_create :set_expiration_time
-  after_create :trigger_password_reset_email
+  after_commit :trigger_password_reset_email, on: :create
 
   validates :token, uniqueness: true
 
