@@ -1,3 +1,15 @@
+<%
+  def secure_password_digest(password = 'password')
+    BCrypt::Password.create(password)
+  end
+
+  @email_counter ||= 0
+  def sequenced_email
+    @email_counter += 1
+    "user#{@email_counter}@example.com"
+  end
+%>
+
 one:
-  email: user@example.com
-  password_digest: <%= BCrypt::Password.create('password') %>
+  email: <%= sequenced_email %>
+  password_digest: <%= secure_password_digest %>
