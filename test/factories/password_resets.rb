@@ -3,14 +3,20 @@ FactoryBot.define do
     user
     sequence(:token) { |n| "valid_token_#{n}#{SecureRandom.hex(10)}" }
     expires_at { 1.hour.from_now }
-    used { false }
+    state { 'pending' }
 
     trait :expired do
       expires_at { 1.hour.ago }
     end
 
     trait :used do
-      used { true }
+      state { 'used' }
+      used_at { 5.minutes.ago }
+    end
+
+    trait :pending do
+      state { 'pending' }
+      used_at { nil }
     end
 
     trait :with_known_token do
