@@ -2,12 +2,14 @@ class CreatePasswordResets < ActiveRecord::Migration[6.1]
   def change
     create_table :password_resets do |t|
       t.references :user, null: false, foreign_key: true
-      t.string :token
-      t.datetime :expires_at
-      t.boolean :used
+      t.string :token, null: false
+      t.datetime :expires_at, null: false
+      t.string :state, default: 'pending'
+      t.datetime :used_at
 
       t.timestamps
     end
+
     add_index :password_resets, :token, unique: true
   end
 end
