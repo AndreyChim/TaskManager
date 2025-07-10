@@ -3,6 +3,7 @@ FactoryBot.define do
     first_name
     last_name
     password
+    sequence(:email)  { |n| "person#{n}@example.com" }
     email
     avatar
     type { '' }
