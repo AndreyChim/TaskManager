@@ -7,9 +7,6 @@ module PasswordReset::StateMachine
         transition pending: :used
       end
   
-      state :pending, value: 'pending'
-      state :used, value: 'used'
- 
       after_transition to: :used, do: :update_used_timestamp
     end
   end
