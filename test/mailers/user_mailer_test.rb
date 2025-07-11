@@ -32,6 +32,7 @@ class UserMailerTest < ActionMailer::TestCase
     assert_equal [NOREPLY_EMAIL], email.from
     assert_equal [user.email], email.to
     assert_equal 'Task Updated', email.subject
-    assert email.body.to_s.include?("Task #{task.id} was updated")
+    assert email.body.to_s.include?('Your task "')
+    assert email.body.to_s.include?('" has been modified')
   end
 end
