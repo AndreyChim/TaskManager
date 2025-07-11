@@ -4,7 +4,6 @@ FactoryBot.define do
     last_name
     password
     sequence(:email)  { |n| "person#{n}@example.com" }
-    email
     avatar
     type { '' }
 
