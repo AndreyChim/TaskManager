@@ -3,19 +3,19 @@ FactoryBot.define do
     user
     sequence(:token) { |n| "valid_token_#{n}#{SecureRandom.hex(10)}" }
     expires_at { 1.hour.from_now }
-    state { 'pending' }
+    state { PasswordReset::STATE_PENDING }
 
     trait :expired do
       expires_at { 1.hour.ago }
     end
 
     trait :used do
-      state { 'used' }
+      state { PasswordReset::STATE_USED }
       used_at { 5.minutes.ago }
     end
 
     trait :pending do
-      state { 'pending' }
+      state { PasswordReset::STATE_PENDING }
       used_at { nil }
     end
 
