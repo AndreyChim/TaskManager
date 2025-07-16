@@ -4,7 +4,7 @@ class CreatePasswordResets < ActiveRecord::Migration[6.1]
       t.references :user, null: false, foreign_key: true
       t.string :token, null: false
       t.datetime :expires_at, null: false
-      t.string :state, default: 'pending'
+      t.string :state
       t.datetime :used_at
 
       t.timestamps
