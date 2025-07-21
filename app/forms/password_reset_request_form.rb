@@ -14,7 +14,7 @@ class PasswordResetRequestForm
         expires_at: 24.hours.from_now,
         used: false
       )
-      UserMailer.password_reset(user, password_reset).deliver_now
+      UserMailer.password_reset(user, password_reset).deliver_later
       true
     end
 end
