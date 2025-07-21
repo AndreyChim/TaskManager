@@ -17,6 +17,8 @@ services:
       - 3002:3002
     depends_on:
       - db
+      - redis
+      - sidekiq
     environment: &web-environment
       DATABASE_HOST: db
       DATABASE_USERNAME: postgres
@@ -28,7 +30,15 @@ services:
       RUBYOPT: -W:no-deprecated -W:no-experimental
       env_file: '.env'
       ROLLBAR_ACCESS_KEY: ${ROLLBAR_ACCESS_KEY}
+      REDIS_URL: redis://redis
     command: bundle exec rails s -b '0.0.0.0' -p 3000
+  sidekiq:
+    build: .
+    command: bundle exec sidekiq -C /task_manager/config/sidekiq.yml
+    environment: *web-environment
+    volumes: *web-volumes
+    depends_on:
+      - redis
 
   db:
     image: postgres:11.4
@@ -37,6 +47,9 @@ services:
     environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
+  
+  redis:
+    image: redis:5.0.9-alpine
 
 volumes:
   bundle_cache:

@@ -1,3 +1,4 @@
+require 'sidekiq/testing'
 require 'coveralls'
 Coveralls.wear!('rails')
 
