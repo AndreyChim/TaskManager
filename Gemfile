@@ -72,4 +72,5 @@ gem 'dotenv-rails', :groups => [:development, :test]
 gem 'bullet'
 gem 'rollbar'
 gem 'newrelic_rpm'
-gem 'sidekiq'
+gem 'sidekiq', '~> 6.5'
+gem 'sidekiq-failures'
