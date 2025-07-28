@@ -1,11 +1,14 @@
-require 'sidekiq'
-require "sidekiq/rails" if defined?(::Rails::Engine) 
-require 'sidekiq/web'
-
-Sidekiq.configure_server do |config|
+  require 'sidekiq/web'
+  require "sidekiq/throttled"
+  require "sidekiq/throttled/web"
+  
+  Sidekiq.configure_server do |config|
     config.redis = { url: ENV['REDIS_URL'] }
   end
   
-Sidekiq.configure_client do |config|
+  Sidekiq.configure_client do |config|
     config.redis = { url: ENV['REDIS_URL'] }
   end
+  
+  Sidekiq::Throttled.setup!
+  Sidekiq::Throttled::Registry.add(:mailer, { threshold: { limit: 1, period: 5.seconds } })
