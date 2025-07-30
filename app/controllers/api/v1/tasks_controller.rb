@@ -21,7 +21,7 @@ class Api::V1::TasksController < Api::V1::ApplicationController
     task = current_user.my_tasks.new(task_params)
     
     if task.save
-      UserMailer.with({ user: current_user, task: task }).task_created.deliver_now
+      SendTaskCreateNotificationJob.perform_async(task.id)
     end
 
     respond_with(task, serializer: TaskSerializer, location: nil)
@@ -31,7 +31,7 @@ class Api::V1::TasksController < Api::V1::ApplicationController
     
     if @task.update(task_params)
       changes = @task.previous_changes
-      UserMailer.with(user: current_user, task: @task, changes: changes).task_updated.deliver_later
+      SendTaskUpdateNotificationJob.perform_async(task.id)
       render json: @task, status: :ok
     else
       render json: @task.errors, status: :unprocessable_entity
@@ -42,9 +42,7 @@ class Api::V1::TasksController < Api::V1::ApplicationController
     task_name = @task.name
     task_id = @task.id
     @task.destroy
-    UserMailer.with(user: current_user, task_name: task_name, task_id: task_id)
-              .task_deleted
-              .deliver_later
+    SendTaskDeleteNotificationJob.perform_async(@task.id)
   end
 
   private

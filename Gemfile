@@ -72,3 +72,7 @@ gem 'dotenv-rails', :groups => [:development, :test]
 gem 'bullet'
 gem 'rollbar'
 gem 'newrelic_rpm'
+gem 'sidekiq', '~> 6.5'
+gem 'sidekiq-failures'
+gem 'sidekiq-throttled', '0.17.0'
+gem 'sidekiq-unique-jobs', '~> 7.0'

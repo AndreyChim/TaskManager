@@ -19,7 +19,7 @@ ActiveRecord::Schema.define(version: 2025_06_03_064623) do
     t.bigint "user_id", null: false
     t.string "token", null: false
     t.datetime "expires_at", null: false
-    t.string "state", default: "pending"
+    t.string "state"
     t.datetime "used_at"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false

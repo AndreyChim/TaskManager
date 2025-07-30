@@ -1,3 +1,5 @@
+require 'sidekiq/testing'
+Sidekiq::Testing.inline!
 require 'coveralls'
 Coveralls.wear!('rails')
 

@@ -1,0 +1,6 @@
+:redis_url: redis://redis:6379/0
+:concurrency: 5
+:verbose: true
+:queues:
+  - default
+  - mailers
