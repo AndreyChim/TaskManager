@@ -28,21 +28,37 @@ class Api::V1::TasksController < Api::V1::ApplicationController
   end
 
   def update
-    
-    if @task.update(task_params)
-      changes = @task.previous_changes
-      SendTaskUpdateNotificationJob.perform_async(task.id)
-      render json: @task, status: :ok
-    else
-      render json: @task.errors, status: :unprocessable_entity
-    end
+    SendTaskUpdateNotificationJob.perform_async(@task.id) if @task.update(task_params)
+
+    respond_with(@task, serializer: TaskSerializer)
   end
 
   def destroy
-    task_name = @task.name
-    task_id = @task.id
-    @task.destroy
-    SendTaskDeleteNotificationJob.perform_async(@task.id)
+    SendTaskDeleteNotificationJob.perform_async(@task.id, @task.author_id) if @task.destroy
+
+    respond_with(@task)
+  end
+
+  def attach_image
+    task = Task.find(params[:id])
+    task_attach_image_form = TaskAttachImageForm.new(attachment_params)
+  
+    if task_attach_image_form.invalid?
+      respond_with task_attach_image_form
+      return
+    end
+  
+    image = task_attach_image_form.processed_image
+    task.image.attach(image)
+  
+    respond_with(task, serializer: TaskSerializer)
+  end
+  
+  def remove_image
+    task = Task.find(params[:id])
+    task.image.purge
+  
+    respond_with(task, serializer: TaskSerializer)
   end
 
   private
@@ -55,5 +71,9 @@ class Api::V1::TasksController < Api::V1::ApplicationController
 
   def task_params
     params.require(:task).permit(:name, :description, :author_id, :assignee_id, :state_event, :expired_at)
+  end
+
+  def attachment_params
+    params.require(:attachment).permit(:image, :crop_x, :crop_y, :crop_width, :crop_height)
   end
 end
