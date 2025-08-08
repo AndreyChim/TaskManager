@@ -1,5 +1,6 @@
 {
   "name": "task-manager",
+  "type": "module",
   "private": true,
   "dependencies": {
     "@asseinfo/react-kanban": "^2.2.0",
@@ -28,6 +29,7 @@
     "eslint-plugin-react-hooks": "^4.6.0",
     "humps": "^2.0.1",
     "material-design-lite": "^1.3.0",
+    "object-to-formdata": "^4.5.1",
     "prettier": "^2.7.1",
     "prop-types": "^15.8.1",
     "ramda": "^0.30.1",
