@@ -26,4 +26,13 @@ export default {
     const path = routes.apiV1TaskPath(id);
     return FetchHelper.delete(path);
   },
+
+   
+  updatePosition(id, position) {
+    return this.update(id, { position });
+  },
+
+  updateStatus(id, status) {
+    return this.update(id, { status });
+  },
 };
