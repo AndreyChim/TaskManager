@@ -27,12 +27,15 @@ export default {
     return FetchHelper.delete(path);
   },
 
-   
-  updatePosition(id, position) {
-    return this.update(id, { position });
+  attachImage(id, imageFile) {
+    const path = routes.apiV1TaskPath(id);
+    const formData = new FormData();
+    formData.append('task[image]', imageFile);
+    return FetchHelper.putFormData(path, { task: { image: imageFile } });
   },
 
-  updateStatus(id, status) {
-    return this.update(id, { status });
+  removeImage(id) {
+    const path = routes.apiV1TaskPath(id);
+    return FetchHelper.patch(path, { task: { image: null } });
   },
 };
