@@ -13,6 +13,8 @@ import Card from '@material-ui/core/Card';
 import CircularProgress from '@material-ui/core/CircularProgress';
 
 import Form from './components/EditForm';
+import ImageUpload from './components/ImageUpload';
+import TaskPresenter from 'presenters/TaskPresenter';
 import useStyles from './useStyles';
 
 function EditPopup({ cardId, onClose, onCardDestroy, onCardLoad, onCardUpdate }) {
@@ -27,7 +29,6 @@ function EditPopup({ cardId, onClose, onCardDestroy, onCardLoad, onCardUpdate })
 
   const handleCardUpdate = () => {
     setSaving(true);
-
     onCardUpdate(task).catch((error) => {
       setSaving(false);
       setErrors(error || {});
@@ -40,14 +41,22 @@ function EditPopup({ cardId, onClose, onCardDestroy, onCardLoad, onCardUpdate })
 
   const handleCardDestroy = () => {
     setSaving(true);
-
     onCardDestroy(task).catch((error) => {
       setSaving(false);
-
       alert(`Destrucion Failed! Error: ${error.message}`);
     });
   };
+
+  const onAttachImage = (imageUrl) => {
+    setTask({ ...task, imageUrl });
+  };
+
+  const onRemoveImage = () => {
+    setTask({ ...task, imageUrl: null });
+  };
+
   const isLoading = isNil(task);
+  const imageUrl = task ? TaskPresenter.imageUrl(task) : null;
 
   return (
     <Modal className={styles.modal} open onClose={onClose}>
@@ -66,7 +75,21 @@ function EditPopup({ cardId, onClose, onCardDestroy, onCardLoad, onCardUpdate })
               <CircularProgress />
             </div>
           ) : (
-            <Form errors={errors} onChange={setTask} task={task} />
+            <>
+              <Form errors={errors} onChange={setTask} task={task} />
+              {isNil(imageUrl) ? (
+                <div className={styles.imageUploadContainer}>
+                  <ImageUpload onUpload={onAttachImage} />
+                </div>
+              ) : (
+                <div className={styles.previewContainer}>
+                  <img className={styles.preview} src={imageUrl} alt="Attachment" />
+                  <Button variant="contained" size="small" color="primary" onClick={onRemoveImage}>
+                    Remove image
+                  </Button>
+                </div>
+              )}
+            </>
           )}
         </CardContent>
         <CardActions className={styles.actions}>
