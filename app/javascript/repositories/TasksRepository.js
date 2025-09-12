@@ -29,8 +29,6 @@ export default {
 
   attachImage(id, imageFile) {
     const path = routes.apiV1TaskPath(id);
-    const formData = new FormData();
-    formData.append('task[image]', imageFile);
     return FetchHelper.putFormData(path, { task: { image: imageFile } });
   },
 
